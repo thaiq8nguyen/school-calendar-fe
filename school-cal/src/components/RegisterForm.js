@@ -2,7 +2,7 @@ import React from 'react';
 import { Form, Field, withFormik } from 'formik';
 import * as Yup from 'yup';
 import { Link } from 'react-router-dom';
-
+import axios from 'axios';
 
 
 const RegisterForm = ({ errors, touched }) => {
@@ -58,7 +58,7 @@ const FormikRegisterForm = withFormik({
     }),
     handleSubmit(values, {props}) {
         console.log(values)
-
+        
     }
 })(RegisterForm);
 

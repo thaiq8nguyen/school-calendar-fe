@@ -5,8 +5,8 @@ const Footer = () => {
     return (
         <div className = "footer-wrapper">
             <div className= 'footer-summary'>
-                <h2>School 📅  Calendar</h2>
-                <p>Copyright ©2019 School 📅  Calendar. All rights reserved</p>
+                <h2>School Calendar</h2>
+                <p>Copyright ©2019 School Calendar. All rights reserved</p>
             </div>
             
             <div className="footer-links">

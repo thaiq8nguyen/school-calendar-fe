@@ -3,15 +3,16 @@ import "firebase/auth";
 import "firebase/firestore";
 
 export const config = {
-    apiKey: process.env.CREATE_REACT_API_KEY,
-    authDomain: process.env.CREATE_REACT_API_KEY,
-    databaseURL: process.env.CREATE_REACT_DATABASE_URL,
-    projectId: process.env.CREATE_REACT_PROJECT_ID,
-    storageBucket: process.env.CREATE_REACT_STORAGE_BUCKET,
-    messagingSenderId: process.env.CREATE_REACT_MESSENGING_SENDER_ID,
-    appId: process.env.CREATE_REACT_APP_ID,
-    measurementId: process.env.CREATE_REACT_MEASUREMENT_ID
+    apiKey: "AIzaSyCKHnk_AIoXYU7BcUa63LhQQWa6-Ma3ujQ",
+    authDomain: "school-calendar-staging.firebaseapp.com",
+    databaseURL: "https://school-calendar-staging.firebaseio.com",
+    projectId: "school-calendar-staging",
+    storageBucket: "school-calendar-staging.appspot.com",
+    messagingSenderId: "482714059970",
+    appId: "1:482714059970:web:b34c56dcb33f214576675b",
+    measurementId:"G-2NCWESMGBP"
   };
 
 export const app = firebase.initializeApp(config);
 export const db = firebase.firestore();
+export default firebase;

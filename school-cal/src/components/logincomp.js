@@ -13,6 +13,8 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 
+import firebase, { db } from '../firebase/index';
+
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
@@ -58,8 +60,8 @@ export default function Login() {
     const [credentials, setCredentials] = useState({email:"", password:""});
 
     const login = event => {
-        console.log(credentials);
         event.preventDefault();
+        return firebase.auth().signInWithEmailAndPassword(credentials.email, credentials.password).catch(err => console.log(err))
     }
 
     const handleChange = event => {

@@ -7,10 +7,12 @@ import Footer from './components/Footer.js';
 import HomePage from './components/HomePage.js';
 
 import './App.css';
+import Login from './components/logincomp';
 
 function App() {
   return (
     <div className="App">
+        <Login />
         <Route exact path ='/' component={HomePage} />
         <Route path = '/register' component={RegisterForm} />
         <NavBar /> 

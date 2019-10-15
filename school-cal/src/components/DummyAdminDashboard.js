@@ -8,3 +8,5 @@ const dummyAdminDashBoard = () => {
         </div>
     )
 }
+
+export default dummyAdminDashBoard;

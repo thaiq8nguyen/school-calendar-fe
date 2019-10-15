@@ -1,6 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Login from "./components/Login";
+import StudentRegister from './components/StudentRegister'
 const AppRouter = () => {
   return (
     <>
@@ -8,7 +9,7 @@ const AppRouter = () => {
         <Switch>
           <Route exact path="/" /> {/* For a future landing page */}
           <Route path="/login" component={Login} />
-          <Route path="/register" />
+          <Route path="/register" component={StudentRegister}/>
         </Switch>
       </Router>
     </>

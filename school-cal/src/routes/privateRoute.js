@@ -1,20 +1,16 @@
-import {React , useContext} from "react" 
-import {Redirect , Route} from "react-router-dom"
+import { React, useContext } from "react";
+import { Redirect, Route } from "react-router-dom";
 
-const privateRoute = ({component : Component, ...rest}) => { 
-    //const {ifUserCurrent} = useContext()
+const PrivateRoute = ({ component: Component, ...rest }) => {
+  //const {ifUserCurrent} = useContext()
   return (
-      <Route 
-       {...rest} 
-       render = {props => 
-        !!ifUserCurrent ? (
-         <Component {...props}/> 
-        ) : (
-        <Redirect to = {"login"} />
-        )
-    } 
+    <Route
+      {...rest}
+      render={props =>
+        !!ifUserCurrent ? <Component {...props} /> : <Redirect to={"login"} />
+      }
     />
-  ) 
-} 
+  );
+};
 
-export default privateRoute;
+export default PrivateRoute;

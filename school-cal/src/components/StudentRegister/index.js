@@ -13,7 +13,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 
-import firebase, { db } from '../firebase/index';
+import firebase, { db } from '../../firebase/index';
 
 function Copyright() {
   return (
@@ -57,17 +57,20 @@ export default function Login() {
     
     const classes = useStyles();
 
-    const [credentials, setCredentials] = useState({email:"", password:""});
+    const [credentials, setCredentials] = useState({firstName:"", lastName:"", email:"", phone:"",password:""});
 
     const login = event => {
         event.preventDefault();
-        return firebase.auth().signInWithEmailAndPassword(credentials.email, credentials.password).catch(err => console.log(err))
+        firebase.auth().createUserWithEmailAndPassword(credentials.email, credentials.password)
+        .then(res =>{
+            console.log(res)
+        })
+        // return firebase.auth().signInWithEmailAndPassword(credentials.email, credentials.password)
     }
 
     const handleChange = event => {
         setCredentials({...credentials, [event.target.name]: event.target.value})
     }
-
 
   return (
     <Container component="main" maxWidth="xs">
@@ -77,21 +80,57 @@ export default function Login() {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Login
+          Student Sign Up
         </Typography>
         <form className={classes.form} noValidate onSubmit={login}>
           <Grid container spacing={2}>
-
+            <Grid item xs={12} sm={6}>
+              <TextField
+                autoComplete="fname"
+                name="firstName"
+                variant="outlined"
+                required
+                fullWidth
+                id="firstName"
+                value={credentials.firstName} onChange={handleChange}
+                label="First Name"
+                autoFocus
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                id="lastName"
+                value={credentials.lastName} onChange={handleChange}
+                label="Last Name"
+                name="lastName"
+                autoComplete="lname"
+              />
+            </Grid>
             <Grid item xs={12}>
               <TextField
                 variant="outlined"
                 required
                 fullWidth
                 id="email"
+                value={credentials.email} onChange={handleChange}
                 label="Email Address"
                 name="email"
                 autoComplete="email"
-                value={credentials.email} onChange={handleChange}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                id="phone"
+                value={credentials.phone} onChange={handleChange}
+                label="Phone Number"
+                name="phone"
+                autoComplete="phone"
               />
             </Grid>
             <Grid item xs={12}>
@@ -103,14 +142,8 @@ export default function Login() {
                 label="Password"
                 type="password"
                 id="password"
-                autoComplete="current-password"
                 value={credentials.password} onChange={handleChange}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <FormControlLabel
-                control={<Checkbox  color="primary" />}
-                label="Stay signed in."
+                autoComplete="current-password"
               />
             </Grid>
           </Grid>
@@ -121,12 +154,12 @@ export default function Login() {
             color="primary"
             className={classes.submit}
           >
-            Log In
+            Sign Up
           </Button>
-          <Grid container justify="flex-end">
+          <Grid container justify="center">
             <Grid item>
               <Link href="#" variant="body2">
-                Don't have an account?
+                Already have an account? Sign in
               </Link>
             </Grid>
           </Grid>

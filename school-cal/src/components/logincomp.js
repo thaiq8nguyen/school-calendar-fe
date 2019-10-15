@@ -58,10 +58,13 @@ export default function Login() {
     const classes = useStyles();
 
     const [credentials, setCredentials] = useState({email:"", password:""});
+    const [emailError, setEmailError] = useState(false);
+    const [passwordError, setPasswordError] = useState(false);
 
     const login = event => {
         event.preventDefault();
-        return firebase.auth().signInWithEmailAndPassword(credentials.email, credentials.password).catch(err => console.log(err))
+        return firebase.auth().signInWithEmailAndPassword(credentials.email, credentials.password)
+        .catch(err => {console.log(err); if (err.code === "auth/invalid-email") {setEmailError(true); console.log(emailError)} if (err.code === "auth/wrong-password"){setPasswordError(true); console.log(passwordError)}})
     }
 
     const handleChange = event => {
@@ -81,7 +84,7 @@ export default function Login() {
         </Typography>
         <form className={classes.form} noValidate onSubmit={login}>
           <Grid container spacing={2}>
-
+            <label className={emailError ? "show": "hide"}>Email Invalid</label>
             <Grid item xs={12}>
               <TextField
                 variant="outlined"
@@ -95,6 +98,7 @@ export default function Login() {
               />
             </Grid>
             <Grid item xs={12}>
+            <label className={passwordError ? "show": "hide"}>Wrong password</label>
               <TextField
                 variant="outlined"
                 required

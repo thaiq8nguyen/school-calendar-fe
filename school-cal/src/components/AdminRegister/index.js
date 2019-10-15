@@ -65,7 +65,6 @@ export default function Login() {
         .then(res =>{
             console.log(res)
         })
-        // return firebase.auth().signInWithEmailAndPassword(credentials.email, credentials.password)
     }
 
     const handleChange = event => {
@@ -80,7 +79,7 @@ export default function Login() {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Student Sign Up
+          Admin Sign Up
         </Typography>
         <form className={classes.form} noValidate onSubmit={login}>
           <Grid container spacing={2}>

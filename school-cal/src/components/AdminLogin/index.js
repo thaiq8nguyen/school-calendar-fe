@@ -6,13 +6,15 @@ import TextField from "@material-ui/core/TextField";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
 import Link from "@material-ui/core/Link";
-import {Link as RouterLink} from "react-router-dom"
+import { Link as RouterLink } from "react-router-dom";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
+import {emailLoginHandler, useSession} from '../../utilities/useAuth';
+import { Redirect } from 'react-router-dom'
 
 import firebase, { db } from "../../firebase/index";
 
@@ -54,34 +56,21 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function Login() {
+export default function AdminLogin() {
   const classes = useStyles();
 
-  const [credentials, setCredentials] = useState({ email: "", password: "" });
-  const [emailError, setEmailError] = useState(false);
-  const [passwordError, setPasswordError] = useState(false);
+  const [credentials, setCredentials] = useState({ email: "", password: "password" });
 
-  const login = event => {
-    event.preventDefault();
-    return firebase
-      .auth()
-      .signInWithEmailAndPassword(credentials.email, credentials.password)
-      .catch(err => {
-        console.log(err);
-        if (err.code === "auth/invalid-email") {
-          setEmailError(true);
-          console.log(emailError);
-        }
-        if (err.code === "auth/wrong-password") {
-          setPasswordError(true);
-          console.log(passwordError);
-        }
-      });
-  };
 
   const handleChange = event => {
     setCredentials({ ...credentials, [event.target.name]: event.target.value });
   };
+
+  const { auth: user } = useSession();
+  console.log(user)
+  if (user) {
+    return <Redirect to="/" />;
+  }
 
   return (
     <Container component="main" maxWidth="xs">
@@ -93,11 +82,9 @@ export default function Login() {
         <Typography component="h1" variant="h5">
           Admin Login
         </Typography>
-        <form className={classes.form} noValidate onSubmit={login}>
+        <form className={classes.form} noValidate onSubmit={event => {}}>
           <Grid container spacing={2}>
-            <label className={emailError ? "show" : "hide"}>
-              Email Invalid
-            </label>
+
             <Grid item xs={12}>
               <TextField
                 variant="outlined"
@@ -112,9 +99,7 @@ export default function Login() {
               />
             </Grid>
             <Grid item xs={12}>
-              <label className={passwordError ? "show" : "hide"}>
-                Wrong password
-              </label>
+
               <TextField
                 variant="outlined"
                 required
@@ -147,14 +132,16 @@ export default function Login() {
           <Grid container justify="center">
             <Grid item>
               <Link variant="body2">
-                <RouterLink to='/AdminRegister'>Don't have an account?</RouterLink>
+                <RouterLink to="/AdminRegister">
+                  Don't have an account?
+                </RouterLink>
               </Link>
             </Grid>
           </Grid>
           <Grid container justify="center">
             <Grid item>
               <Link variant="body2">
-                <RouterLink to='/StudentRegister'>Not an Admin?</RouterLink>
+                <RouterLink to="/StudentRegister">Not an Admin?</RouterLink>
               </Link>
             </Grid>
           </Grid>

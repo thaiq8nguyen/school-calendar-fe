@@ -90,7 +90,7 @@ export default function Login() {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Login
+          Admin Login
         </Typography>
         <form className={classes.form} noValidate onSubmit={login}>
           <Grid container spacing={2}>

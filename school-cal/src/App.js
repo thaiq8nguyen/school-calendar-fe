@@ -1,23 +1,9 @@
-import React from 'react';
-import logo from './logo.svg';
+import React from "react";
 import AppRouter from "./AppRouter";
-import './App.css';
-import Login from './components/logincomp'; 
-import {BrowserRouter as Router , Route} from 'react-router-dom'
-import {Admin} from './components/DummyAdminDashboard'
-import privateRoute from './routes/privateRoute.js'
-
+import "./App.css";
 
 function App() {
-  return ( 
-    <Router>
-    <div className="App">
-    <privateRoute exact path = "/admin" component ={Admin}/>  
-    <Route exact path = "/login" component = {Login}/> 
-    </div> 
-    <AppRouter />
-    </Router>
-  );
+  return <AppRouter />;
 }
 
 export default App;

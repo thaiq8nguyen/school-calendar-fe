@@ -18,6 +18,7 @@ const setIsLoading = (state, action) => {
   };
 };
 const setLoginSuccess = (state, action) => {
+  console.log("We logged in!")
   return {
     ...state,
     isAuthenticated: true,

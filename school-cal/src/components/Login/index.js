@@ -68,10 +68,10 @@ export default function Login() {
     setCredentials({ ...credentials, [event.target.name]: event.target.value });
   };
 
-  const { auth: user } = useSession();
+ 
   
-  if (user) {
-    return <Redirect to="/" />;
+  if (isLoading) {
+    return <Redirect to="/studentdashboard" />;
   }
 
   return (

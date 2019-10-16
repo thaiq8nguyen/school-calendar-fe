@@ -14,7 +14,7 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import { AuthContext } from "../../contexts/auth/authState";
-import firebase, { db } from "../../firebase/index";
+import { db } from "../../firebase/index";
 
 function Copyright() {
   return (
@@ -54,30 +54,45 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function AdminLogin() {
+export default function AdminLogin({ history }) {
   const classes = useStyles();
 
   const [credentials, setCredentials] = useState({ email: "", password: "" });
   const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
-  const { signInWithEmailAndPassword, isLoading } = useContext(AuthContext);
+  const {
+    currentUser,
+    isLoading,
+    signInError,
+    signInWithEmailAndPassword
+  } = useContext(AuthContext);
+
+  useEffect(() => {
+    if (signInError) {
+      if (signInError.code === "auth/invalid-email") {
+        setEmailError(true);
+      }
+
+      if (signInError.code === "auth/wrong-password") {
+        setPasswordError(true);
+      }
+    }
+  }, [signInError]);
+
+  useEffect(() => {
+    if (currentUser) {
+      history.push("/admin-dashboard");
+    }
+  });
 
   const login = event => {
     event.preventDefault();
-    return firebase
-      .auth()
-      .signInWithEmailAndPassword(credentials.email, credentials.password)
-      .catch(err => {
-        console.log(err);
-        if (err.code === "auth/invalid-email") {
-          setEmailError(true);
-          console.log(emailError);
-        }
-        if (err.code === "auth/wrong-password") {
-          setPasswordError(true);
-          console.log(passwordError);
-        }
-      });
+
+    signInWithEmailAndPassword(credentials.email, credentials.password);
+    if (currentUser) {
+      console.log("no-error");
+      history.push("/admin-dashboard");
+    }
   };
 
   const handleChange = event => {

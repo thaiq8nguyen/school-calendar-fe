@@ -67,7 +67,13 @@ export default function AdminLogin() {
   const { signInWithEmailAndPassword, isLoading } = useContext(AuthContext);
 
 
-
+  const login = event => {
+    event.preventDefault();
+    firebase.auth().signInWithEmailAndPassword(credentials.email, credentials.password)
+    .then(res =>{
+        console.log(res)
+    })
+  }
 
   const handleChange = event => {
     setCredentials({ ...credentials, [event.target.name]: event.target.value });
@@ -89,7 +95,7 @@ export default function AdminLogin() {
         <Typography component="h1" variant="h5">
           Admin Login
         </Typography>
-        <form className={classes.form} noValidate onSubmit={event => {}}>
+        <form className={classes.form} noValidate onSubmit={login}>
           <Grid container spacing={2}>
 
             <Grid item xs={12}>

@@ -6,7 +6,7 @@ import { AuthState } from "./contexts/auth/authState";
 function App() {
   return (
     <AuthState>
-      <AppRouter />;
+      <AppRouter />
     </AuthState>
   );
 }

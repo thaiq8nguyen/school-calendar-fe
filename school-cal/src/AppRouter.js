@@ -8,13 +8,12 @@ import AdminRegister from "./components/AdminRegister";
 import Login from "./components/Login/index";
 
 import AdminDashboard from "./components/AdminDashboard";
-import PrivateRoute from "./routes/privateRoute";
-import Navbar from "./components/Navbar";
+import PrivateRoute from "./routes/PrivateRoute";
+
 const AppRouter = () => {
   return (
     <>
       <Router>
-        <Navbar />
         <Switch>
           <Route exact path="/" component={Landing} />
           <Route path="/admin-signin" component={AdminLogin} />

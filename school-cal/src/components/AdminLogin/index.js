@@ -100,10 +100,6 @@ export default function AdminLogin({ history }) {
     setCredentials({ ...credentials, [event.target.name]: event.target.value });
   };
 
-  if (isLoading) {
-    return <Redirect to="/admindashboard" />;
-  }
-
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />

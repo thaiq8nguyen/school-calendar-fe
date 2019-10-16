@@ -66,7 +66,6 @@ export default function AdminLogin() {
   const [passwordError, setPasswordError] = useState(false);
   const { signInWithEmailAndPassword, isLoading } = useContext(AuthContext);
 
-  const [credentials, setCredentials] = useState({ email: "", password: "password" });
 
 
 

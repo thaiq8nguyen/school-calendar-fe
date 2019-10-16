@@ -3,18 +3,47 @@ import fireapp from "../../firebase/index.js";
 
 import Navbar from "../../components/Navbar";
 
+import { app } from "../../firebase";
+import { getDayClasses } from "@fullcalendar/core";
+const drawerWidth = 240;
+const useStyles = makeStyles(theme => ({
+  root: {
+    display: "flex"
+  },
+  drawer: {
+    width: drawerWidth,
+    flexShrink: 0
+  },
+  drawerPaper: {
+    width: drawerWidth
+  },
+  toolbar: theme.mixins.toolbar,
+  content: {
+    flexGrow: 1,
+    padding: theme.spacing(10, 2)
+  },
+  list: {
+    textAlign: "center"
+  }
+}));
 
-import AdminDashBoard from './AdminDashboard';
-
-const Index = () => {
-    return (
-      <div className = "Index-container">  
-        <Navbar />
-        <AdminDashBoard 
-          
-        />
+const AdminDashBoard = () => {
+  const classes = useStyles();
+  return (
+    <div className={getDayClasses.root}>
+      <Navbar drawerWidth={drawerWidth} />
+      <Drawer
+        anchor="left"
+        classes={{ paper: classes.drawerPaper }}
+        className={classes.drawer}
+        variant="permanent"
+      >
+        <div className={classes.toolbar} />
+        <Divider />
+        <List>
+          <Button>Add Event</Button>
+        </List>
+      </Drawer>
       </div>
-    );
+  )
 };
-
-export default Index; 

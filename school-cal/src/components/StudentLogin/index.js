@@ -15,7 +15,9 @@ import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 
 import { AuthContext } from "../../contexts/auth/authState";
-import { db } from "../../firebase/index";
+import {emailLoginHandler, useSession} from '../../utilities/useAuth';
+import { Redirect } from 'react-router-dom'
+import firebase, { db } from "../../firebase/index";
 
 function Copyright() {
   return (
@@ -55,50 +57,27 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function AdminLogin({ history }) {
+export default function AdminLogin() {
   const classes = useStyles();
+
 
   const [credentials, setCredentials] = useState({ email: "", password: "" });
   const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
-  const {
-    currentUser,
-    isLoading,
-    signInError,
-    signInWithEmailAndPassword
-  } = useContext(AuthContext);
+  const { signInWithEmailAndPassword, isLoading } = useContext(AuthContext);
 
-  useEffect(() => {
-    if (signInError) {
-      if (signInError.code === "auth/invalid-email") {
-        setEmailError(true);
-      }
 
-      if (signInError.code === "auth/wrong-password") {
-        setPasswordError(true);
-      }
-    }
-  }, [signInError]);
 
-  useEffect(() => {
-    if (currentUser) {
-      history.push("/admin-dashboard");
-    }
-  });
-
-  const login = event => {
-    event.preventDefault();
-
-    signInWithEmailAndPassword(credentials.email, credentials.password);
-    if (currentUser) {
-      console.log("no-error");
-      history.push("/admin-dashboard");
-    }
-  };
 
   const handleChange = event => {
     setCredentials({ ...credentials, [event.target.name]: event.target.value });
   };
+
+  const { auth: user } = useSession();
+  console.log(user)
+  if (user) {
+    return <Redirect to="/" />;
+  }
 
   return (
     <Container component="main" maxWidth="xs">
@@ -108,17 +87,11 @@ export default function AdminLogin({ history }) {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Admin Login
+          Student Login
         </Typography>
-        <form
-          className={classes.form}
-          noValidate
-          onSubmit={event => {
-            event.preventDefault();
-            signInWithEmailAndPassword(credentials.email, credentials.password);
-          }}
-        >
+        <form className={classes.form} noValidate onSubmit={event => {}}>
           <Grid container spacing={2}>
+
             <Grid item xs={12}>
               <TextField
                 variant="outlined"
@@ -133,6 +106,7 @@ export default function AdminLogin({ history }) {
               />
             </Grid>
             <Grid item xs={12}>
+
               <TextField
                 variant="outlined"
                 required
@@ -165,7 +139,7 @@ export default function AdminLogin({ history }) {
           <Grid container justify="center">
             <Grid item>
               <Link variant="body2">
-                <RouterLink to="/AdminRegister">
+                <RouterLink to="/StudentRegister">
                   Don't have an account?
                 </RouterLink>
               </Link>
@@ -174,7 +148,7 @@ export default function AdminLogin({ history }) {
           <Grid container justify="center">
             <Grid item>
               <Link variant="body2">
-                <RouterLink to="/StudentRegister">Not an Admin?</RouterLink>
+                <RouterLink to="/AdminRegister">Not an Student?</RouterLink>
               </Link>
             </Grid>
           </Grid>

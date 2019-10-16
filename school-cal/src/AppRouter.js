@@ -3,22 +3,23 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Landing from "./pages/Landing";
 import AdminLogin from "./components/AdminLogin";
 import StudentRegister from "./components/StudentRegister";
+import StudentLogin from "./components/StudentLogin";
 import AdminRegister from "./components/AdminRegister";
-import AdminDashboard from "./components/AdminDashboard";
-import AdminAddEvent from './components/AdminDashboard/AdminAddEvent';
+import Login from "./components/Login/index";
 
-import PrivateRoute from "./routes/privateRoute";
+import AdminDashboard from "./components/AdminDashboard";
+import PrivateRoute from "./routes/PrivateRoute";
+
 const AppRouter = () => {
   return (
     <>
       <Router>
         <Switch>
           <Route exact path="/" component={Landing} />
-          <Route path="/AdminLogin" component={AdminLogin} />
-          <Route path="/StudentRegister" component={StudentRegister} />
-          <Route path="/AdminRegister" component={AdminRegister} />
-          <Route path="/AdminDashboard" component={AdminDashboard} />
-          <Route to='/add-event' component={AdminAddEvent} />
+          <Route path="/admin-signin" component={AdminLogin} />
+          <Route path="/student-register" component={StudentRegister} />
+          <Route path="/admin-register" component={AdminRegister} />
+          <PrivateRoute path="/admin-dashboard" component={AdminDashboard} />
         </Switch>
       </Router>
     </>

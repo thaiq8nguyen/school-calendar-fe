@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React from "react";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
@@ -17,5 +18,14 @@ const Landing = () => {
     </>
   );
 };
+=======
+import React from "react"
 
-export default Landing;
+const Landing = () => {
+  return (
+    <h1>Landing</h1>
+  )
+}
+>>>>>>> 4778a3e62552313c81743793bffabd587a73cabf
+
+export default Landing

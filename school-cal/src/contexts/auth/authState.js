@@ -57,6 +57,7 @@ export const AuthState = props => {
     }
   };
   const signInWithEmailAndPassword = async (email, password) => {
+    
     dispatch({ type: IS_LOADING, payload: true });
     try {
       await app.auth().signInWithEmailAndPassword(email, password);

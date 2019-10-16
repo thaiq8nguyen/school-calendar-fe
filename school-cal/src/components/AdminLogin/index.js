@@ -15,9 +15,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 
 import { AuthContext } from "../../contexts/auth/authState";
-import {emailLoginHandler, useSession} from '../../utilities/useAuth';
-import { Redirect } from 'react-router-dom'
-import firebase, { db } from "../../firebase/index";
+import { db } from "../../firebase/index";
 
 function Copyright() {
   return (
@@ -57,24 +55,50 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function AdminLogin() {
+export default function AdminLogin({ history }) {
   const classes = useStyles();
-
 
   const [credentials, setCredentials] = useState({ email: "", password: "" });
   const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
-  const { signInWithEmailAndPassword, isLoading } = useContext(AuthContext);
+  const {
+    currentUser,
+    isLoading,
+    signInError,
+    signInWithEmailAndPassword
+  } = useContext(AuthContext);
 
+  useEffect(() => {
+    if (signInError) {
+      if (signInError.code === "auth/invalid-email") {
+        setEmailError(true);
+      }
+
+      if (signInError.code === "auth/wrong-password") {
+        setPasswordError(true);
+      }
+    }
+  }, [signInError]);
+
+  useEffect(() => {
+    if (currentUser) {
+      history.push("/admin-dashboard");
+    }
+  });
+
+  const login = event => {
+    event.preventDefault();
+
+    signInWithEmailAndPassword(credentials.email, credentials.password);
+    if (currentUser) {
+      console.log("no-error");
+      history.push("/admin-dashboard");
+    }
+  };
 
   const handleChange = event => {
     setCredentials({ ...credentials, [event.target.name]: event.target.value });
   };
-  
-  
-  if (isLoading) {
-    return <Redirect to="/admindashboard" />;
-  }
 
   return (
     <Container component="main" maxWidth="xs">
@@ -86,9 +110,15 @@ export default function AdminLogin() {
         <Typography component="h1" variant="h5">
           Admin Login
         </Typography>
-        <form className={classes.form} noValidate onSubmit={event => {event.preventDefault(); signInWithEmailAndPassword(credentials.email, credentials.password)}}>
+        <form
+          className={classes.form}
+          noValidate
+          onSubmit={event => {
+            event.preventDefault();
+            signInWithEmailAndPassword(credentials.email, credentials.password);
+          }}
+        >
           <Grid container spacing={2}>
-
             <Grid item xs={12}>
               <TextField
                 variant="outlined"
@@ -103,7 +133,6 @@ export default function AdminLogin() {
               />
             </Grid>
             <Grid item xs={12}>
-
               <TextField
                 variant="outlined"
                 required

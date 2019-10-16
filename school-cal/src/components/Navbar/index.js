@@ -7,11 +7,11 @@ import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 
-//import { AuthContext } from "../../contexts/auth/authState";
+import { AuthContext } from "../../contexts/auth/authState";
 import { db } from "../../firebase";
 
 const Navbar = ({ drawerWidth }) => {
-  //const { currentUser, signOut } = useContext(AuthContext);
+  const { currentUser, signOut } = useContext(AuthContext);
   const [userProfile, setUserProfile] = useState(null);
 
   const useStyles = makeStyles(theme => ({
@@ -53,7 +53,7 @@ const Navbar = ({ drawerWidth }) => {
       <AppBar position="fixed" className={classes.appBar}>
         <Toolbar>
           <Typography variant="h6" className={classes.title}>
-            Calendar
+            School Calendar
           </Typography>
           <Button color="inherit" onClick={signOut}>
             Sign Out

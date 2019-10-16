@@ -5,6 +5,8 @@ import AdminLogin from "./components/AdminLogin";
 import StudentRegister from "./components/StudentRegister";
 import AdminRegister from "./components/AdminRegister";
 import AdminDashboard from "./components/AdminDashboard";
+import AdminAddEvent from './components/AdminDashboard/AdminAddEvent';
+
 import PrivateRoute from "./routes/privateRoute";
 const AppRouter = () => {
   return (
@@ -16,6 +18,7 @@ const AppRouter = () => {
           <Route path="/StudentRegister" component={StudentRegister} />
           <Route path="/AdminRegister" component={AdminRegister} />
           <Route path="/AdminDashboard" component={AdminDashboard} />
+          <Route to='/add-event' component={AdminAddEvent} />
         </Switch>
       </Router>
     </>

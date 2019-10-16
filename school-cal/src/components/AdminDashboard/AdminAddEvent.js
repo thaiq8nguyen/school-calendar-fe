@@ -1,22 +1,17 @@
-import React from 'react';
-// import FullCalendar from '@fullcalendar/react'
-// import dayGridPlugin from '@fullcalendar/daygrid'
+import React, { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
-const AdminAddEvent = () => {
+function AdminAddEvent() {
+
     return (
-        <div className = "AdminAddEvent-container">
-            <p>select date you want to add an event on</p>
-            {/* <FullCalendar
-                defaultView="dayGridMonth"
-                plugins={[ dayGridPlugin ]}
-                weekends={false}
-                events={[
-                    { title: 'event 1', date: '2019-04-01' },
-                    { title: 'event 2', date: '2019-04-02' }
-                ]}
-            /> */}
-        </div>
-    );
+            <div className = "AdminAddEvent-container">
+                <h1>this is where we are going to add an event </h1>
+                <Link to ='AdminDashboard'>
+                    <p>Confirm</p>
+                </Link>
+            </div>
+
+    )
 };
 
 export default AdminAddEvent; 

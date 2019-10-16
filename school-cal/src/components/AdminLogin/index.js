@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -13,9 +13,10 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
+
+import { AuthContext } from "../../contexts/auth/authState";
 import {emailLoginHandler, useSession} from '../../utilities/useAuth';
 import { Redirect } from 'react-router-dom'
-
 import firebase, { db } from "../../firebase/index";
 
 function Copyright() {
@@ -59,7 +60,14 @@ const useStyles = makeStyles(theme => ({
 export default function AdminLogin() {
   const classes = useStyles();
 
+
+  const [credentials, setCredentials] = useState({ email: "", password: "" });
+  const [emailError, setEmailError] = useState(false);
+  const [passwordError, setPasswordError] = useState(false);
+  const { signInWithEmailAndPassword, isLoading } = useContext(AuthContext);
+
   const [credentials, setCredentials] = useState({ email: "", password: "password" });
+
 
 
   const handleChange = event => {

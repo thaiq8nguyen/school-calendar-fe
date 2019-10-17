@@ -7,8 +7,9 @@ import StudentLogin from "./components/StudentLogin";
 import AdminRegister from "./components/AdminRegister";
 import Login from "./components/Login/index";
 
-import AdminDashboard from "./components/AdminDashboard";
+import AdminDashboard from "./components/AdminDashboard/AdminDashboard";
 import PrivateRoute from "./routes/PrivateRoute";
+
 
 const AppRouter = () => {
   return (

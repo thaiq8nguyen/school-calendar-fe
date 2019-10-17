@@ -1,5 +1,5 @@
 import React from 'react';
-import fireapp from "../../firebase/index.js";
+import fireapp from "../../firebase/index";
 
 import Navbar from "../../components/Navbar";
 

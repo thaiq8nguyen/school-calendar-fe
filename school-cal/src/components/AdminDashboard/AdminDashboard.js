@@ -11,7 +11,7 @@ import "@fullcalendar/core/main.css";
 import "@fullcalendar/daygrid/main.css";
 import "@fullcalendar/timegrid/main.css";
 
-import { app } from "../../firebase";
+import { app, db } from "../../firebase";
 
 //css
 import './AdminDashboard.css'

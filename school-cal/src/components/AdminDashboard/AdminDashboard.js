@@ -16,17 +16,48 @@ import { app, db } from "../../firebase";
 //css
 import './AdminDashboard.css'
 
+import AdminAddEvent from './AdminAddEvent';
+
+//setting state
+const eventData =[
+  {
+    title: 'todays events! lets get it done',
+    start: new Date()
+  }
+]
 
 export default class AdminDashBoard extends React.Component {
-  calendarComponentRef = React.createRef();
-  state = {
-    calendarWeekends: true,
-    calendarEvents: [
-      //initial event data
-      { title: "todays Event ", start: new Date() }
-    ]
+  constructor(props){
+    super(props);
+    this.state= {
+
+      events: eventData
+    }
+  }
+  dateClick = dateStr => {
+    console.log('date was clicked', this.state.start)
+    this.setState({
+      events: [...this.state.events, {
+        start: dateStr
+      }]
+    })
+  }
+
+  addEvent = (title, start) =>  {
+    const newEvents = [...this.state.events]
+    newEvents.push({
+      title: title,
+      start: start,
+      id: Date.now()
+    })
+
+    this.setState({
+      events: newEvents
+    });
   };
+
   render(){
+    console.log(this.state)
     return (
       <div className= 'full-calendar-admin' >
           <FullCalendar
@@ -37,26 +68,17 @@ export default class AdminDashBoard extends React.Component {
               right: "dayGridMonth,timeGridWeek,timeGridDay,listWeek"
             }}
             plugins={[ dayGridPlugin, timeGridPlugin, interactionPlugin ]}
-            selectable={true}
-            events={this.state.calendarEvents}
-            dateClick={this.handleDateClick}
+            navLinks={true} //can click day/week names to navigate views
+            selectable={true} // can highlight multiple days, by clicking and dragging
+            events={this.state.events} //adds events from state
+            dateClick={this.dateClick} //click on date to add event
           />
+          <AdminAddEvent
+            addEvent={this.addEvent}
+            // handleDateClick={this.handleDateClick}
+          />
+
       </div>
     );
 };
-handleDateClick = arg => {
-  this.setState({
-    // add new event data
-    calendarEvents: this.state.calendarEvents.concat({
-      // creates a new array
-      title: "New Event",
-      start: arg.date,
-      allDay: arg.allDay
-    })
-  });
-  db
-    .collection('events')
-    .doc(this.state.calendarEvents[this.state.calendarEvents.length - 1].title)
-    .set(this.state)
-}}
-
+}

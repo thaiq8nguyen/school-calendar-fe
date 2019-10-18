@@ -1,6 +1,6 @@
 import React, { createContext, useReducer, useEffect } from "react";
 import * as firebase from "firebase/app";
-import { app, db } from "../../firebase";
+import { app, db, googleProvider } from "../../firebase";
 //import GoogleAPI from "../../services/googleAPI";
 import {
   IS_LOADING,
@@ -26,8 +26,8 @@ export const AuthState = props => {
   };
 
   const [state, dispatch] = useReducer(authReducer, initialState);
-  // not working
-  //let gapi = window.gapi;
+  // Google API CLient Library
+  // let gapi = window.gapi;
 
   useEffect(() => {
     firebase.auth().onAuthStateChanged(user => {
@@ -65,24 +65,15 @@ export const AuthState = props => {
     }
   };
 
-  // Not working
-  // const signInWithGoogle = async () => {
+  const signInWithGoogle = async () => {
+    try {
+      let data = await firebase.auth().signInWithPopup(googleProvider);
 
-  //   try {
-  //     const googleAuth = gapi.auth2.getAuthInstance();
-
-  //     const googleUser = await googleAuth.signIn();
-
-  //     const token = googleUser.getAuthResponse().id_token;
-
-  //     const credential = firebase.auth.GoogleAuthProvider.credential(token);
-
-  //     await app.auth().signInWithCredential(credential);
-  //   } catch (error) {
-  //     console.log(`Sign In with Google Error: ${error}`);
-  //     dispatch({ type: LOGIN_FAILURE, payload: error.message });
-  //   }
-  // };
+      dispatch({ type: SIGNIN_SUCCESS, payload: true });
+    } catch (error) {
+      dispatch({ type: SIGNIN_FAILURE, payload: error });
+    }
+  };
   const signOut = async () => {
     try {
       await app.auth().signOut();
@@ -100,6 +91,7 @@ export const AuthState = props => {
         signUpError: state.signUpError,
         currentUser: state.currentUser,
         signInWithEmailAndPassword,
+        signInWithGoogle,
         signUpUser,
         signOut
       }}

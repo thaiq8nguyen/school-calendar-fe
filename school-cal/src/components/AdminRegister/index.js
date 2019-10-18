@@ -1,11 +1,20 @@
 import React, { useContext, useEffect } from "react";
-
+import { Grid } from "@material-ui/core";
 import { AuthContext } from "../../contexts/auth/authState";
 import { Formik } from "formik";
 import AdminRegisterForm from "./AdminRegisterForm";
 import * as Yup from "yup";
-
-import { app, db } from "../../firebase/index";
+import { makeStyles } from "@material-ui/core/styles";
+import desktopCalendarImg from "../../assets/images/desktop_calendar.jpg";
+const useStyles = makeStyles(theme => ({
+  root: {
+    flexGrow: 1
+  },
+  image: {
+    width: "100%",
+    height: "100%"
+  }
+}));
 
 const AdminRegister = ({ history }) => {
   const {
@@ -15,6 +24,8 @@ const AdminRegister = ({ history }) => {
     signUpUser,
     signInWithGoogle
   } = useContext(AuthContext);
+
+  const classes = useStyles();
 
   useEffect(() => {
     if (currentUser) {
@@ -42,27 +53,41 @@ const AdminRegister = ({ history }) => {
 
   return (
     <>
-      <Formik
-        initialValues={{
-          firstName: "",
-          lastName: "",
-          email: "",
-          password: ""
-        }}
-        onSubmit={(values, actions) => {
-          signUpUser(values);
-          actions.resetForm();
-        }}
-        render={formikProps => (
-          <AdminRegisterForm
-            {...formikProps}
-            isLoading={isLoading}
-            signUpError={signUpError}
-            signInWithGoogle={signInWithGoogle}
-          />
-        )}
-        validationSchema={AdminRegisterSchema}
-      />
+      <div className={classes.root}>
+        <Grid container>
+          <Grid item md={6}>
+            <img
+              className={classes.image}
+              src={desktopCalendarImg}
+              alt={"desktopCalendar"}
+            />
+          </Grid>
+          <Grid item md={6}>
+            <Formik
+              initialValues={{
+                firstName: "",
+                lastName: "",
+                email: "",
+                password: "",
+                confirmPassword: ""
+              }}
+              onSubmit={(values, actions) => {
+                signUpUser(values);
+                actions.resetForm();
+              }}
+              render={formikProps => (
+                <AdminRegisterForm
+                  {...formikProps}
+                  isLoading={isLoading}
+                  signUpError={signUpError}
+                  signInWithGoogle={signInWithGoogle}
+                />
+              )}
+              validationSchema={AdminRegisterSchema}
+            />
+          </Grid>
+        </Grid>
+      </div>
     </>
   );
 };

@@ -55,10 +55,12 @@ export const AuthState = props => {
       dispatch({ type: SIGNUP_FAILURE, payload: error });
     }
   };
-  const signInWithEmailAndPassword = async (email, password) => {
+  const signInWithEmailAndPassword = async credential => {
     dispatch({ type: IS_LOADING, payload: true });
     try {
-      await app.auth().signInWithEmailAndPassword(email, password);
+      await app
+        .auth()
+        .signInWithEmailAndPassword(credential.email, credential.password);
       dispatch({ type: SIGNIN_SUCCESS, payload: true });
     } catch (error) {
       dispatch({ type: SIGNIN_FAILURE, payload: error });

@@ -1,17 +1,17 @@
-import React, { useEffect, useState } from "react";
-import Avatar from "@material-ui/core/Avatar";
-import Button from "@material-ui/core/Button";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import TextField from "@material-ui/core/TextField";
-import Link from "@material-ui/core/Link";
-import Grid from "@material-ui/core/Grid";
-import Box from "@material-ui/core/Box";
-import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
-import Typography from "@material-ui/core/Typography";
-import { makeStyles } from "@material-ui/core/styles";
-import Container from "@material-ui/core/Container";
-import CircularProgress from "@material-ui/core/CircularProgress";
-import { Divider } from "@material-ui/core";
+import React, { useEffect, useState } from "react"
+import Avatar from "@material-ui/core/Avatar"
+import Button from "@material-ui/core/Button"
+import CssBaseline from "@material-ui/core/CssBaseline"
+import TextField from "@material-ui/core/TextField"
+import Link from "@material-ui/core/Link"
+import Grid from "@material-ui/core/Grid"
+import Box from "@material-ui/core/Box"
+import LockOutlinedIcon from "@material-ui/icons/LockOutlined"
+import Typography from "@material-ui/core/Typography"
+import { makeStyles } from "@material-ui/core/styles"
+import Container from "@material-ui/core/Container"
+import CircularProgress from "@material-ui/core/CircularProgress"
+import { Divider } from "@material-ui/core"
 const copyRight = () => {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
@@ -22,41 +22,41 @@ const copyRight = () => {
       {new Date().getFullYear()}
       {"."}
     </Typography>
-  );
-};
+  )
+}
 
 const useStyles = makeStyles(theme => ({
   "@global": {
     body: {
-      backgroundColor: theme.palette.common.white
-    }
+      backgroundColor: theme.palette.common.white,
+    },
   },
   paper: {
     display: "flex",
     flexDirection: "column",
-    alignItems: "center"
+    alignItems: "center",
   },
   avatar: {
     margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main
+    backgroundColor: theme.palette.secondary.main,
   },
   form: {
     width: "100%",
     padding: "0 20px",
-    marginTop: theme.spacing(3)
+    marginTop: theme.spacing(3),
   },
   submit: {
-    margin: theme.spacing(3, 0, 2)
+    margin: theme.spacing(3, 0, 2),
   },
   signInWithGoogle: {
-    margin: theme.spacing(2, 0, 2)
+    margin: theme.spacing(2, 0, 2),
   },
 
   progress: {
     margin: theme.spacing(1),
-    color: "white"
-  }
-}));
+    color: "white",
+  },
+}))
 const AdminRegisterForm = ({
   values,
   errors,
@@ -66,19 +66,19 @@ const AdminRegisterForm = ({
   handleBlur,
   signInWithGoogle,
   isLoading,
-  signUpError
+  signUpError,
 }) => {
-  const classes = useStyles();
+  const classes = useStyles()
 
-  const [fireBaseError, setFireBaseError] = useState(null);
+  const [fireBaseError, setFireBaseError] = useState(null)
 
   useEffect(() => {
     if (signUpError) {
       if (signUpError.code === "auth/email-already-in-use") {
-        setFireBaseError("The email is already registered.");
+        setFireBaseError("The email is already registered.")
       }
     }
-  }, [signUpError]);
+  }, [signUpError])
   return (
     <>
       <Grid
@@ -87,8 +87,7 @@ const AdminRegisterForm = ({
         direction="column"
         alignItems="center"
         justify="center"
-        style={{ minHeight: "100vh" }}
-      >
+        style={{ minHeight: "100vh" }}>
         <Grid item xs={12} className={classes.paper}>
           <Avatar className={classes.avatar}>
             <LockOutlinedIcon />
@@ -97,7 +96,7 @@ const AdminRegisterForm = ({
             Admin Sign Up
           </Typography>
           <form className={classes.form} noValidate onSubmit={handleSubmit}>
-            <Grid container spacing={2}>
+            <Grid style={{ padding: 20 }} container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <TextField
                   autoComplete="firstName"
@@ -187,8 +186,7 @@ const AdminRegisterForm = ({
               fullWidth
               variant="contained"
               color="primary"
-              className={classes.submit}
-            >
+              className={classes.submit}>
               {!isLoading ? (
                 "Sign Up"
               ) : (
@@ -202,8 +200,7 @@ const AdminRegisterForm = ({
               fullWidth
               onClick={signInWithGoogle}
               type="button"
-              variant="contained"
-            >
+              variant="contained">
               Sign In With Google
             </Button>
             <Grid container justify="center">
@@ -226,7 +223,7 @@ const AdminRegisterForm = ({
         </Grid>
       </Grid>
     </>
-  );
-};
+  )
+}
 
-export default AdminRegisterForm;
+export default AdminRegisterForm

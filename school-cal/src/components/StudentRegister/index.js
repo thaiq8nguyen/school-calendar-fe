@@ -17,7 +17,6 @@ const StudentRegister = ({ history }) => {
     signInWithGoogle
   } = useContext(AuthContext);
 
-  
   useEffect(() => {
     if (currentUser) {
       history.push("/student-dashboard");

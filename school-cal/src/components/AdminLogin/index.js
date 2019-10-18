@@ -268,7 +268,7 @@ export default function AdminLogin({ history }) {
           <Grid container justify="center">
             <Grid item>
               <Link variant="body2">
-                <RouterLink to="/AdminRegister">
+                <RouterLink to="/admin-register">
                   Don't have an account?
                 </RouterLink>
               </Link>
@@ -277,7 +277,7 @@ export default function AdminLogin({ history }) {
           <Grid container justify="center">
             <Grid item>
               <Link variant="body2">
-                <RouterLink to="/StudentRegister">Not an Admin?</RouterLink>
+                <RouterLink to="/student-signin">Not an Admin?</RouterLink>
               </Link>
             </Grid>
           </Grid>

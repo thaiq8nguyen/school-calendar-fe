@@ -2,9 +2,10 @@ import React, { useContext, useEffect } from "react";
 import { Grid } from "@material-ui/core";
 import { AuthContext } from "../../contexts/auth/authState";
 import { Formik } from "formik";
-import AdminRegisterForm from "./AdminRegisterForm";
+import RegistrationForm from "./RegistrationForm";
 import * as Yup from "yup";
 import { makeStyles } from "@material-ui/core/styles";
+import { CssBaseline } from "@material-ui/core";
 import desktopCalendarImg from "../../assets/images/desktop_calendar.jpg";
 const useStyles = makeStyles(theme => ({
   root: {
@@ -16,7 +17,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const AdminRegister = ({ history }) => {
+const Registration = ({ history }) => {
   const {
     currentUser,
     isLoading,
@@ -33,7 +34,8 @@ const AdminRegister = ({ history }) => {
     }
   }, [currentUser]);
 
-  const AdminRegisterSchema = Yup.object().shape({
+  const RegistrationSchema = Yup.object().shape({
+    userRole: Yup.string().required("Are you a teacher or a student?"),
     firstName: Yup.string()
       .min(2, "First name must be greater than 2 characters.")
       .max(50, "First name must be lesser 50 characters.")
@@ -48,12 +50,16 @@ const AdminRegister = ({ history }) => {
     password: Yup.string()
       .min(6, "Password must be at least 6 characters.")
       .max(32, "Password must be less than 32 characters.")
-      .required("Password is required.")
+      .required("Password is required."),
+    passwordConfirmation: Yup.string()
+      .oneOf([Yup.ref("password"), null], "Password must match.")
+      .required("Password confirmation is required.")
   });
 
   return (
     <>
       <div className={classes.root}>
+        <CssBaseline />
         <Grid container>
           <Grid item md={6}>
             <img
@@ -65,25 +71,26 @@ const AdminRegister = ({ history }) => {
           <Grid item md={6}>
             <Formik
               initialValues={{
+                userRole: "",
                 firstName: "",
                 lastName: "",
                 email: "",
                 password: "",
-                confirmPassword: ""
+                passwordConfirmation: ""
               }}
               onSubmit={(values, actions) => {
                 signUpUser(values);
                 actions.resetForm();
               }}
               render={formikProps => (
-                <AdminRegisterForm
+                <RegistrationForm
                   {...formikProps}
                   isLoading={isLoading}
                   signUpError={signUpError}
                   signInWithGoogle={signInWithGoogle}
                 />
               )}
-              validationSchema={AdminRegisterSchema}
+              validationSchema={RegistrationSchema}
             />
           </Grid>
         </Grid>
@@ -92,4 +99,4 @@ const AdminRegister = ({ history }) => {
   );
 };
 
-export default AdminRegister;
+export default Registration;

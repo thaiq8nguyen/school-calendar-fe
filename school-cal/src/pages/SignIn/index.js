@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect } from "react"
 import { CssBaseline, Grid } from "@material-ui/core"
 import { makeStyles } from "@material-ui/core"
-import AdminLoginForm from "./AdminLoginForm"
+import AdminLoginForm from "./SignInForm"
 import { AuthContext } from "../../contexts/auth/authState"
 import { Formik } from "formik"
 import * as Yup from "yup"
@@ -16,7 +16,7 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-const AdminLogin = ({ history }) => {
+const SignIn = ({ history }) => {
   const {
     currentUser,
     isLoading,
@@ -75,4 +75,4 @@ const AdminLogin = ({ history }) => {
   )
 }
 
-export default AdminLogin
+export default SignIn

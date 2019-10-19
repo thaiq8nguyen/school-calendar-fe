@@ -1,15 +1,14 @@
-import React from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import Landing from "./pages/Landing";
-import AdminLogin from "./components/AdminLogin";
-import StudentRegister from "./components/StudentRegister";
-import StudentLogin from "./components/StudentLogin";
-import Registration from "./pages/Registration";
-import StudentDashboard from "./components/StudentDashboard";
-import Login from "./components/Login/index";
+import React from "react"
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom"
+import Landing from "./pages/Landing"
+import AdminLogin from "./components/AdminLogin"
+import StudentRegister from "./components/StudentRegister"
+import StudentLogin from "./components/StudentLogin"
+import Registration from "./pages/Registration"
+import StudentDashboard from "./components/StudentDashboard"
+import Login from "./components/Login/index"
 
-import AdminDashboard from "./components/AdminDashboard";
-import PrivateRoute from "./routes/PrivateRoute";
+import AdminDashboard from "./components/AdminDashboard"
 
 const AppRouter = () => {
   return (
@@ -26,7 +25,7 @@ const AppRouter = () => {
         </Switch>
       </Router>
     </>
-  );
-};
+  )
+}
 
-export default AppRouter;
+export default AppRouter

@@ -1,17 +1,22 @@
 import React, { useEffect, useState } from "react";
-import Avatar from "@material-ui/core/Avatar";
-import Button from "@material-ui/core/Button";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import TextField from "@material-ui/core/TextField";
-import Link from "@material-ui/core/Link";
-import Grid from "@material-ui/core/Grid";
-import Box from "@material-ui/core/Box";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
-import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
-import Container from "@material-ui/core/Container";
-import CircularProgress from "@material-ui/core/CircularProgress";
-import { Divider } from "@material-ui/core";
+import {
+  Avatar,
+  Box,
+  Button,
+  CircularProgress,
+  Divider,
+  FormControl,
+  FormHelperText,
+  Grid,
+  InputLabel,
+  Link,
+  MenuItem,
+  Select,
+  TextField,
+  Typography
+} from "@material-ui/core";
 const copyRight = () => {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
@@ -45,6 +50,9 @@ const useStyles = makeStyles(theme => ({
     padding: "0 20px",
     marginTop: theme.spacing(3)
   },
+  formControl: {
+    minWidth: 160
+  },
   submit: {
     margin: theme.spacing(3, 0, 2)
   },
@@ -55,9 +63,12 @@ const useStyles = makeStyles(theme => ({
   progress: {
     margin: theme.spacing(1),
     color: "white"
+  },
+  link: {
+    textAlign: "center"
   }
 }));
-const AdminRegisterForm = ({
+const RegistrationForm = ({
   values,
   errors,
   touched,
@@ -69,9 +80,8 @@ const AdminRegisterForm = ({
   signUpError
 }) => {
   const classes = useStyles();
-
   const [fireBaseError, setFireBaseError] = useState(null);
-
+  console.log("Errors ", errors);
   useEffect(() => {
     if (signUpError) {
       if (signUpError.code === "auth/email-already-in-use") {
@@ -79,6 +89,7 @@ const AdminRegisterForm = ({
       }
     }
   }, [signUpError]);
+
   return (
     <>
       <Grid
@@ -89,15 +100,32 @@ const AdminRegisterForm = ({
         justify="center"
         style={{ minHeight: "100vh" }}
       >
-        <Grid item xs={12} className={classes.paper}>
+        <div className={classes.paper}>
           <Avatar className={classes.avatar}>
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Admin Sign Up
+            Sign Up
           </Typography>
           <form className={classes.form} noValidate onSubmit={handleSubmit}>
             <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <FormControl className={classes.formControl}>
+                  <InputLabel htmlFor="user-role">I'm a ... </InputLabel>
+                  <Select
+                    inputProps={{ name: "userRole", id: "user-role" }}
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    value={values.userRole}
+                  >
+                    <MenuItem value={"student"}>Student</MenuItem>
+                    <MenuItem value={"teacher"}>Teacher</MenuItem>
+                  </Select>
+                  {touched.userRole && errors.userRole && (
+                    <FormHelperText error>{errors.userRole}</FormHelperText>
+                  )}
+                </FormControl>
+              </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
                   autoComplete="firstName"
@@ -170,63 +198,67 @@ const AdminRegisterForm = ({
                   variant="outlined"
                   required
                   fullWidth
-                  name="confirmPassword"
+                  name="passwordConfirmation"
                   label="Confirm Password"
                   type="password"
-                  id="confirm-password"
-                  value={values.confirmPassword}
+                  id="password-confirmation"
+                  value={values.passwordConfirmation}
                   onChange={handleChange}
                   onBlur={handleBlur}
                   autoComplete="confirm-password"
+                  helperText={
+                    touched.passwordConfirmation
+                      ? errors.passwordConfirmation
+                      : ""
+                  }
+                  error={
+                    touched.passwordConfirmation &&
+                    Boolean(errors.passwordConfirmation)
+                  }
                 />
               </Grid>
             </Grid>
-            {fireBaseError && <Box my={4}>{fireBaseError}</Box>}
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              color="primary"
-              className={classes.submit}
-            >
-              {!isLoading ? (
-                "Sign Up"
-              ) : (
-                <CircularProgress className={classes.progress} size={30} />
-              )}
-            </Button>
-            <Divider />
-            <Button
-              className={classes.signInWithGoogle}
-              color="primary"
-              fullWidth
-              onClick={signInWithGoogle}
-              type="button"
-              variant="contained"
-            >
-              Sign In With Google
-            </Button>
-            <Grid container justify="center">
-              <Grid item>
-                <Link href="/admin-signin" variant="body2">
-                  Already have an account? Sign in
-                </Link>
-              </Grid>
+            <Grid item xs={12}>
+              {fireBaseError && <Box my={4}>{fireBaseError}</Box>}
             </Grid>
-            <Grid container justify="center">
-              <Grid item>
-                <Link href="/student-register" variant="body2">
-                  Not an Admin?
-                </Link>
-              </Grid>
+
+            <Grid item xs={12}>
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                color="primary"
+                className={classes.submit}
+              >
+                {!isLoading ? (
+                  "Sign Up"
+                ) : (
+                  <CircularProgress className={classes.progress} size={30} />
+                )}
+              </Button>
+              <div className={classes.link}>
+                <Link href="/sign-in">Alread has an account ? Sign In</Link>
+              </div>
+
+              <Divider />
+              <Button
+                className={classes.signInWithGoogle}
+                color="primary"
+                fullWidth
+                onClick={signInWithGoogle}
+                type="button"
+                variant="contained"
+              >
+                Sign In With Google
+              </Button>
             </Grid>
           </form>
 
           <Box mt={5}>{copyRight}</Box>
-        </Grid>
+        </div>
       </Grid>
     </>
   );
 };
 
-export default AdminRegisterForm;
+export default RegistrationForm;

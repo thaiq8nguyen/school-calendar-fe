@@ -4,8 +4,8 @@ import Landing from "./pages/Landing";
 import AdminLogin from "./components/AdminLogin";
 import StudentRegister from "./components/StudentRegister";
 import StudentLogin from "./components/StudentLogin";
-import AdminRegister from "./components/AdminRegister";
-import StudentDashboard from './components/StudentDashboard'
+import Registration from "./pages/Registration";
+import StudentDashboard from "./components/StudentDashboard";
 import Login from "./components/Login/index";
 
 import AdminDashboard from "./components/AdminDashboard";
@@ -20,9 +20,9 @@ const AppRouter = () => {
           <Route path="/admin-signin" component={AdminLogin} />
           <Route path="/student-register" component={StudentRegister} />
           <Route path="/student-signin" component={StudentLogin} />
-          <Route path="/admin-register" component={AdminRegister} />
+          <Route path="/registration" component={Registration} />
           <Route path="/admin-dashboard" component={AdminDashboard} />
-          <Route path='/student-dashboard' component={StudentDashboard}/>
+          <Route path="/student-dashboard" component={StudentDashboard} />
         </Switch>
       </Router>
     </>

@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
-import { Grid } from "@material-ui/core";
+import { CssBaseline, Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core";
 import AdminLoginForm from "./AdminLoginForm";
 import { AuthContext } from "../../contexts/auth/authState";
@@ -17,8 +17,6 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const AdminLogin = ({ history }) => {
-  const [emailError, setEmailError] = useState(false);
-  const [passwordError, setPasswordError] = useState(false);
   const {
     currentUser,
     isLoading,

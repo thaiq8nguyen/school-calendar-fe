@@ -235,7 +235,7 @@ const RegistrationForm = ({
                 )}
               </Button>
               <div className={classes.link}>
-                <Link href="/sign-in">Alread has an account ? Sign In</Link>
+                <Link href="/sign-in">Already has an account ? Sign In</Link>
               </div>
 
               <Divider />

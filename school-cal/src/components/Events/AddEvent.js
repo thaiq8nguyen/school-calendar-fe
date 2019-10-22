@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react"
 import moment from "moment"
 import { Formik, Field } from "formik"
 import * as Yup from "yup"
-import { db } from "../../firebase"
+import { db } from "../../config/firebase"
 import { AuthContext } from "../../contexts/auth/authState"
 
 import {

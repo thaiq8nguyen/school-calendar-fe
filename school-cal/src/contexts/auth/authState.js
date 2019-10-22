@@ -80,6 +80,25 @@ export const AuthState = props => {
   const signInWithGoogle = async () => {
     try {
       let data = await firebase.auth().signInWithPopup(googleProvider)
+      const { user } = data
+
+      const userRef = await db.collection("users").doc(user.uid)
+      const userDoc = await userRef.get()
+
+      if (!userDoc.exists) {
+        db.collection("users")
+          .doc(user.uid)
+          .set({
+            displayName: user.displayName,
+            email: user.email,
+          })
+
+        db.collection("calendars").add({
+          name: "primary",
+          admins: [user.uid],
+          students: [],
+        })
+      }
 
       dispatch({ type: SIGNIN_SUCCESS, payload: true })
     } catch (error) {

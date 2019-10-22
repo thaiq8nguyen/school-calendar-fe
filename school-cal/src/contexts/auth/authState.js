@@ -1,6 +1,6 @@
 import React, { createContext, useReducer, useEffect } from "react"
 import * as firebase from "firebase/app"
-import { app, db, googleProvider } from "../../firebase"
+import { app, db, googleProvider } from "../../config/firebase"
 //import GoogleAPI from "../../services/googleAPI";
 import {
   IS_LOADING,

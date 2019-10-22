@@ -12,9 +12,9 @@ import {
   Select,
 } from "@material-ui/core"
 
-import AddEvent from "../Events/AddEvent"
+import AddEvent from "../../components/Events/AddEvent"
 import { makeStyles } from "@material-ui/core/styles"
-import { db } from "../../firebase"
+import { db } from "../../config/firebase"
 import Navbar from "../../components/Navbar"
 
 import { AuthContext } from "../../contexts/auth/authState"

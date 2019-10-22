@@ -8,7 +8,7 @@ import Registration from "./pages/Registration"
 import StudentDashboard from "./components/StudentDashboard"
 
 import AdminDashboard from "./components/AdminDashboard"
-
+import PrivateRoute from "./components/Routes/PrivateRoute"
 const AppRouter = () => {
   return (
     <>
@@ -19,7 +19,7 @@ const AppRouter = () => {
           <Route path="/student-register" component={StudentRegister} />
           <Route path="/student-signin" component={StudentLogin} />
           <Route path="/registration" component={Registration} />
-          <Route path="/admin-dashboard" component={AdminDashboard} />
+          <PrivateRoute path="/admin-dashboard" component={AdminDashboard} />
           <Route path="/student-dashboard" component={StudentDashboard} />
         </Switch>
       </Router>

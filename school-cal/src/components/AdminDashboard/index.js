@@ -3,16 +3,22 @@ import {
   Button,
   Divider,
   Drawer,
+  CssBaseline,
+  InputLabel,
   Grid,
   List,
   ListItem,
+  MenuItem,
+  Select,
 } from "@material-ui/core"
+
 import AddEvent from "../Events/AddEvent"
 import { makeStyles } from "@material-ui/core/styles"
-
+import { db } from "../../firebase"
 import Navbar from "../../components/Navbar"
+
 import { AuthContext } from "../../contexts/auth/authState"
-import { app, db } from "../../firebase"
+
 const drawerWidth = 240
 const useStyles = makeStyles(theme => ({
   root: {
@@ -36,18 +42,57 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-const AdminDashBoard = ({ history }) => {
+const AdminDashBoard = () => {
   const { currentUser } = useContext(AuthContext)
   const [isAddEventOpen, setAddEvent] = useState(false)
+  const [calendars, setCalendars] = useState([])
+  const [calendar, setCalendar] = useState({ id: "" })
+
+  // load user calendars
   useEffect(() => {
-    if (!currentUser) {
-      history.push("/sign-in")
+    if (currentUser) {
+      db.collection("calendars")
+        .where("admins", "array-contains", currentUser.uid)
+        .get()
+        .then(querySnapshot => {
+          querySnapshot.forEach(doc => {
+            const calendar = {
+              id: doc.id,
+              name: doc.data().name,
+              admins: doc.data().admins,
+              students: doc.data().students,
+            }
+
+            setCalendars([...calendars, calendar])
+          })
+        })
+        .catch(error => {
+          console.log(error)
+        })
     }
   }, [currentUser])
+
+  // pre-select a default primary calendar
+  useEffect(() => {
+    if (calendars.length > 0) {
+      const primaryCalendarIndex = calendars.findIndex(
+        calendar => calendar.name === "primary",
+      )
+
+      const primaryCalendar = calendars[primaryCalendarIndex]
+      setCalendar({ id: primaryCalendar.id })
+    }
+  }, [calendars])
+
+  // handling calendar selected from the drop-down
+  const handleChange = event => {
+    setCalendar({ id: event.target.value })
+  }
 
   const classes = useStyles()
   return (
     <div className={classes.root}>
+      <CssBaseline />
       <Navbar drawerWidth={drawerWidth} />
       <Drawer
         anchor="left"
@@ -64,8 +109,22 @@ const AdminDashBoard = ({ history }) => {
             Add Event
           </ListItem>
         </List>
+        <Divider />
+        <InputLabel htmlFor="calendars">Calendars</InputLabel>
+        <Select onChange={handleChange} value={calendar.id}>
+          {calendars.map(calendar => (
+            <MenuItem key={calendar.id} value={calendar.id}>
+              {calendar.name}
+            </MenuItem>
+          ))}
+        </Select>
       </Drawer>
-      <AddEvent handleClose={() => setAddEvent(false)} open={isAddEventOpen} />
+      <main className={classes.content}></main>
+      <AddEvent
+        handleClose={() => setAddEvent(false)}
+        open={isAddEventOpen}
+        calendar={calendar}
+      />
     </div>
   )
 }

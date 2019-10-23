@@ -189,11 +189,6 @@ const AdminDashBoard = () => {
           <Typography variant="h6" className={classes.title}>
             School Calendar
           </Typography>
-          {/* {userProfile && (
-            <Typography className={classes.greeting} style={{marginLeft:"80%"}}>
-              Hello, {userProfile.firstName}
-            </Typography>
-          )} */}
           <Button
             color="inherit"
             onClick={signOut}

@@ -1,53 +1,25 @@
 import React, { useEffect, useState } from "react"
-import List from "@material-ui/core/List"
-import ListItem from "@material-ui/core/ListItem"
 import { Link } from "react-router-dom"
 import firebase from "firebase"
-export default function Landing() {
-  // const [calendars, setCalendars] = useState([])
-  // useEffect(() => {
-  //   const unsubscribe = firebase
-  //     .firestore()
-  //     .collection("calendars")
-  //     .where("admins", "array-contains", "mdgq4B4KJjVisa8oik8aWdgNnDn1")
-  //     .onSnapshot(snap => {
-  //       let cals = []
-  //       snap.docs.forEach(doc => {
-  //         const data = doc.data()
-  //         cals.push({ ...data, id: doc.id })
-  //       })
-  //       setCalendars(cals)
-  //     })
-  //   return () => unsubscribe()
-  // }, [])
-  // console.log(calendars)
+import LandingNavbar from './LandingNavbar'
 
-  // useEffect(() => {
-  //   firebase
-  //     .firestore()
-  //     .collection("calendars")
-  //     .doc("")
-  //     .collection("events")
-  //     .get()
-  //     .then(docs => {
-  //       console.log(docs)
-  //     })
-  // }, [])
+import AppleCal from '../../assets/images/apple-cal.jpg'
+import '../../index.css'
+
+
+export default function Landing() {
 
   return (
-    <>
-      <h1>Future Landing Page</h1>
-      {/* {calendars.map(item => {
-        return <div>{item.name}</div>
-      })} */}
-      <List>
-        <ListItem>
-          <Link to="/sign-in">Sign In</Link>
-        </ListItem>
-        <ListItem>
-          <Link to="/registration">Registration</Link>
-        </ListItem>
-      </List>
-    </>
+     <div className='container'>
+     <LandingNavbar/>
+     <div className='landing-grid-container'><img
+            className='landing-img'
+            src={AppleCal}
+            alt={"desktopCalendar"}
+          /><Link className='landing-link' to='/sign-in'>Sign In</Link></div>
+           <div><Link className='landing-link2' to='/register'>Sign Up</Link></div>
+     </div>
+        
+
   )
 }

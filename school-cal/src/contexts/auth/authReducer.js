@@ -82,7 +82,6 @@ const authReducer = (state, action) => {
     case SIGNIN_FAILURE:
       return setSignInFailure(state, action)
     case SIGNIN_WITH_GOOGLE_SUCCESS:
-      localStorage.setItem("state", JSON.stringify(action.payload))
       return setSignInWithGoogleSuccess(state, action)
     case SIGNUP_SUCCESS:
       return setSignUpSuccess(state, action)

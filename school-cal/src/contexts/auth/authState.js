@@ -35,21 +35,23 @@ export const AuthState = props => {
   }, [state])
 
   const signUpUser = async values => {
+    //console.log(values)
     dispatch({ type: IS_LOADING, payload: true })
     try {
-      const data = await client.post("/register", values)
+      const response = await client.post("/api/auth/register", values)
 
-      dispatch({ type: SIGNUP_SUCCESS, payload: data })
+      dispatch({ type: SIGNUP_SUCCESS, payload: response.data })
     } catch (error) {
+      console.log(error)
       dispatch({ type: SIGNUP_FAILURE, payload: error })
     }
   }
-  const signInWithEmailAndPassword = async credential => {
+  const signInWithUserIdAndPassword = async credential => {
     dispatch({ type: IS_LOADING, payload: true })
     try {
-      const data = await client.post("/sign-in")
+      const response = await client.post("/api/auth/login", credential)
 
-      dispatch({ type: SIGNIN_SUCCESS, payload: data })
+      dispatch({ type: SIGNIN_SUCCESS, payload: response.data })
     } catch (error) {
       dispatch({ type: SIGNIN_FAILURE, payload: error })
     }
@@ -79,7 +81,7 @@ export const AuthState = props => {
         signInError: state.signInError,
         signUpError: state.signUpError,
         currentUser: state.currentUser,
-        signInWithEmailAndPassword,
+        signInWithUserIdAndPassword,
         signInWithGoogle,
         signUpUser,
         signOut,
